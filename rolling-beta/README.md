@@ -10,3 +10,8 @@
 2. Automated in Excel via VBA
 3. Further automated in the browser via PHP and javascript (currently living on [my cloud server] (http://www.zachmueller.com/apps/charts))
 4. Rebuild and expand browser app using R and Shiny (work in progress)
+
+## Required R Libraries
+Library | Version | Purpose
+`quantmod` | 0.4-0 | Used for easy downloading of stock market data
+`shiny` | 0.10.0 | Builds the interactive web interface

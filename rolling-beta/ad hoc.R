@@ -10,33 +10,58 @@ sym <- c("AMZN","AAPL","^GSPC")
 # download data into time series
 sym <- getSymbols(sym, src = "yahoo", from = start.date, auto.assign = TRUE)
 
+# create backups of stock data objects
+GSPC.bk <- GSPC
+AMZN.bk <- AMZN
+AAPL.bk <- AAPL
 
 # loop through each returned symbol
 min.start.date <- start.date
+max.date <- Sys.Date()
 for (i in sym) {
 	# capture each stock's earliest date index
 	#   and store the greatest of that and previous min.start.date
 	min.start.date <- max(index(get(i))[1]
 		,min.start.date)
+	
+	# capture latest end date that all stocks share
+	max.date <- min(max(index(get(i)[,1]))
+		,max.date)
 }
 
+# create list for output
+symbols <- list()
+
+######################################################
+#	Example R script of following eval(parse())
+#GSPC <- window(GSPC, start = min.start.date, end = max.date)
+######################################################
+
+# loop through symbols and push only truncated date range into list
+for (i in sym) {
+	# push in truncated time series
+	eval(parse(text = paste('symbols[["', i
+		,'"]] <- window(', i
+		,', start = min.start.date, end = max.date)',sep='')))
+	
+	# calculate daily percent change in stock prices
+	symbols[[i]]$percent.change <- ( symbols[[i]][,6] 
+		/ lag(symbols[[i]][,6], 1) - 1 )
+}
+
+
+################################
+# restore from backup (if needed after ad hoc tinkering)
 GSPC <- GSPC.bk
 AMZN <- AMZN.bk
 AAPL <- AAPL.bk
-
-# trim each time series to the latest start date
-max.date <- max(index(get(sym[1])))
-GSPC <- window(GSPC, start = min.start.date
-	,end = max.date)
-
-
-# calculate percent change of daily adjusted prices
-d <- AAPL[,6]
-percent.change <- d / lag(d, 1) - 1
+################################
 
 
 
-# create population functions
+
+
+# create population (as opposed to sample) functions
 # standard deviation (population)
 sd.pop <- function(x) {
 	sqrt(sum((x-mean(x))^2) / length(x))
