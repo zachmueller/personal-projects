@@ -13,5 +13,6 @@
 
 ## Required R Libraries
 Library | Version | Purpose
+--------|---------|----------
 `quantmod` | 0.4-0 | Used for easy downloading of stock market data
 `shiny` | 0.10.0 | Builds the interactive web interface
