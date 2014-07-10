@@ -72,7 +72,8 @@ for (i in offset.amount:max.index) {
 )
 # extremely slow: 15 - 20 seconds
 plot(symbols[[1]]$beta)
-
+# investigate using zoo's rollapply() function
+# http://stackoverflow.com/questions/13195442/moving-variance-in-r
 
 
 ###############################################
