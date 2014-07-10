@@ -57,6 +57,21 @@ AMZN <- AMZN.bk
 AAPL <- AAPL.bk
 ################################
 
+# loop for now...
+offset.amount <- 252
+max.index <- length(symbols[[1]][,7])
+symbols[[1]]$beta <- as.numeric(rep(NA, max.index))
+
+system.time(
+for (i in offset.amount:max.index) {
+	stock.data <- symbols[[1]][(i - offset.amount):i,7]
+	market.data <- symbols[[3]][(i - offset.amount):i,7]
+	symbols[[1]]$beta[i] <- (cov.pop(stock.data
+		,market.data) / (sd.pop(market.data)^2))
+}
+)
+# extremely slow: 15 - 20 seconds
+plot(symbols[[1]]$beta)
 
 
 
