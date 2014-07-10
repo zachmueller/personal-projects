@@ -75,6 +75,20 @@ plot(symbols[[1]]$beta)
 
 
 
+###############################################
+# benchmark
+stock.data <- symbols[[1]][2:253,7]
+market.data <- symbols[[3]][2:253,7]
+system.time(replicate(1000,
+	symbols[[1]]$beta[253] <- (cov.pop(stock.data
+		,market.data) / (sd.pop(market.data)^2))
+))
+system.time(replicate(1000,
+	symbols[[1]]$beta[253] <- (cov(stock.data
+		,market.data) / (sd(market.data)^2))
+))
+
+###############################################
 
 # create population (as opposed to sample) functions
 # standard deviation (population)
