@@ -1,4 +1,4 @@
 # Projects
-- R version of rolling Beta chart
-- SQL Project (likely to move to a new repository)
-- Anything else that pops into my head
+ - Business Days of Month, SQL function
+ - Old Excel macros
+ - Anything else that pops into my head
